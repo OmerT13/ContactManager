@@ -29,11 +29,21 @@ public class MainActivity extends AppCompatActivity {
         jason.setPhoneNumber("0193827384");
 //        db.addContact(jason);
 
+        Contact c = db.getContact(2);
+        Log.d("DBHandler One Contact", "Getting One Contact: " + c.getName() + " | " + c.getPhoneNumber());
+        c.setName("OriginalJeremy");
+        c.setPhoneNumber("619092");
+        int updateRow = db.updateContact(c);
+        Log.d("DBHandler", "Update Rowid: "+updateRow);
+
+        Contact d = db.getContact(7);
+        db.deleteContact(d);
+        Log.d("DBHandler", "Delete Contact: "+d.getName());
+
 
         List<Contact> contactList = db.getAllContacts();
         for (Contact contact: contactList) {
-            Log.d("DBHandler", "getting all contacts: "+contact.getId()+contact.getName());
+            Log.d("DBHandler All Contacts", "getting all contacts: "+contact.getId()+contact.getName());
         }
-
     }
 }
