@@ -19,31 +19,43 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHandler db = new DatabaseHandler(MainActivity.this);
 
-        Contact jeremy = new Contact();
-        jeremy.setName("Jeremy");
-        jeremy.setPhoneNumber("0134456543");
-//        db.addContact(jeremy);
+//        testCreateContact(db);
+//        testUpdateContact(db);
+//        testDeleteContact(1,db);
 
-        Contact jason = new Contact();
-        jason.setName("Jason");
-        jason.setPhoneNumber("0193827384");
-//        db.addContact(jason);
-
-        Contact c = db.getContact(2);
-        Log.d("DBHandler One Contact", "Getting One Contact: " + c.getName() + " | " + c.getPhoneNumber());
-        c.setName("OriginalJeremy");
-        c.setPhoneNumber("619092");
-        int updateRow = db.updateContact(c);
-        Log.d("DBHandler", "Update Rowid: "+updateRow);
-
-        Contact d = db.getContact(7);
-        db.deleteContact(d);
-        Log.d("DBHandler", "Delete Contact: "+d.getName());
+        /*db.addContact(new Contact("John","0148372845"));
+        db.addContact(new Contact("Jane","012948374"));
+        db.addContact(new Contact("Joseph","01297546"));
+        db.addContact(new Contact("Jeremy","011948374"));*/
 
 
         List<Contact> contactList = db.getAllContacts();
         for (Contact contact: contactList) {
             Log.d("DBHandler All Contacts", "getting all contacts: "+contact.getId()+contact.getName());
         }
+
+        Log.d("DBHandler Count", "onCreate: "+db.getCount());
+    }
+
+    private void testCreateContact(DatabaseHandler db) {
+        Contact jeremy = new Contact();
+        jeremy.setName("Jeremy");
+        jeremy.setPhoneNumber("0134456543");
+        db.addContact(jeremy);
+    }
+
+    private void testUpdateContact(DatabaseHandler db) {
+        Contact c = db.getContact(2);
+        Log.d("DBHandler One Contact", "Getting One Contact: " + c.getName() + " | " + c.getPhoneNumber());
+        c.setName("OriginalJeremy");
+        c.setPhoneNumber("619092");
+        int updateRow = db.updateContact(c);
+        Log.d("DBHandler", "Update Rowid: "+updateRow);
+    }
+
+    private void testDeleteContact(int ContactId, DatabaseHandler db) {
+        Contact d = db.getContact(ContactId);
+        db.deleteContact(d);
+        Log.d("DBHandler", "Delete Contact: "+d.getName());
     }
 }
