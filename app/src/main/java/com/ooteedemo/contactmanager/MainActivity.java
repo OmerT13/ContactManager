@@ -4,18 +4,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.ooteedemo.contactmanager.data.DatabaseHandler;
 import com.ooteedemo.contactmanager.model.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private ListView listView;
+    private ArrayList<String> contactArrayList;
+    private ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        listView = findViewById(R.id.listView);
+        contactArrayList = new ArrayList<>();
+
 
         DatabaseHandler db = new DatabaseHandler(MainActivity.this);
 
@@ -32,7 +44,24 @@ public class MainActivity extends AppCompatActivity {
         List<Contact> contactList = db.getAllContacts();
         for (Contact contact: contactList) {
             Log.d("DBHandler All Contacts", "getting all contacts: "+contact.getId()+contact.getName());
+            contactArrayList.add(contact.getName());
         }
+
+//        Create Array Adapter
+        arrayAdapter = new ArrayAdapter<>(
+          this,android.R.layout.simple_list_item_1, contactArrayList
+        );
+
+//        Use the adapter to display the data into our listView
+        listView.setAdapter(arrayAdapter);
+
+//        Attach an event listener to the listView items
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("ListView", "onItemClick: "+ contactArrayList.get(position));
+            }
+        });
 
         Log.d("DBHandler Count", "onCreate: "+db.getCount());
     }
