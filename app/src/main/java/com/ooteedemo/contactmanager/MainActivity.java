@@ -38,7 +38,12 @@ public class MainActivity extends AppCompatActivity {
         /*db.addContact(new Contact("John","0148372845"));
         db.addContact(new Contact("Jane","012948374"));
         db.addContact(new Contact("Joseph","01297546"));
-        db.addContact(new Contact("Jeremy","011948374"));*/
+        db.addContact(new Contact("Jeremy","011948374"));
+        db.addContact(new Contact("Michael","011348374"));
+        db.addContact(new Contact("Mickey","014948374"));
+        db.addContact(new Contact("Michaella","011948379"));
+        db.addContact(new Contact("Mozart","011977374"));
+        db.addContact(new Contact("Mazda","016948374"));*/
 
 
         List<Contact> contactList = db.getAllContacts();
