@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = findViewById(R.id.listView);
+//        listView = findViewById(R.id.listView);
         contactArrayList = new ArrayList<>();
 
 
@@ -51,8 +51,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d("DBHandler All Contacts", "getting all contacts: "+contact.getId()+contact.getName());
             contactArrayList.add(contact.getName());
         }
+//        listViewHandling(db);
 
-//        Create Array Adapter
+    }
+
+    private void listViewHandling(DatabaseHandler db) {
+        //        Create Array Adapter
         arrayAdapter = new ArrayAdapter<>(
           this,android.R.layout.simple_list_item_1, contactArrayList
         );
