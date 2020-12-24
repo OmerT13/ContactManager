@@ -1,6 +1,8 @@
 package com.ooteedemo.contactmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.ooteedemo.contactmanager.adapter.RecyclerViewAdapter;
 import com.ooteedemo.contactmanager.data.DatabaseHandler;
 import com.ooteedemo.contactmanager.model.Contact;
 
@@ -16,8 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ListView listView;
-    private ArrayList<String> contactArrayList;
+//    private ListView listView;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private ArrayList<Contact> contactArrayList;
     private ArrayAdapter<String> arrayAdapter;
 
     @Override
@@ -25,39 +30,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        listView = findViewById(R.id.listView);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         contactArrayList = new ArrayList<>();
-
-
         DatabaseHandler db = new DatabaseHandler(MainActivity.this);
-
-//        testCreateContact(db);
-//        testUpdateContact(db);
-//        testDeleteContact(1,db);
-
-        /*db.addContact(new Contact("John","0148372845"));
-        db.addContact(new Contact("Jane","012948374"));
-        db.addContact(new Contact("Joseph","01297546"));
-        db.addContact(new Contact("Jeremy","011948374"));
-        db.addContact(new Contact("Michael","011348374"));
-        db.addContact(new Contact("Mickey","014948374"));
-        db.addContact(new Contact("Michaella","011948379"));
-        db.addContact(new Contact("Mozart","011977374"));
-        db.addContact(new Contact("Mazda","016948374"));*/
-
-
         List<Contact> contactList = db.getAllContacts();
         for (Contact contact: contactList) {
             Log.d("DBHandler All Contacts", "getting all contacts: "+contact.getId()+contact.getName());
-            contactArrayList.add(contact.getName());
+            contactArrayList.add(contact);
         }
+
+        recyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this,contactArrayList);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+
+
+
 //        listViewHandling(db);
 
     }
 
-    private void listViewHandling(DatabaseHandler db) {
+    /*private void listViewHandling(DatabaseHandler db) {
         //        Create Array Adapter
-        arrayAdapter = new ArrayAdapter<>(
+        arrayAdapter = new ArrayAdapter<Object>(
           this,android.R.layout.simple_list_item_1, contactArrayList
         );
 
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Log.d("DBHandler Count", "onCreate: "+db.getCount());
-    }
+    }*/
 
     private void testCreateContact(DatabaseHandler db) {
         Contact jeremy = new Contact();
