@@ -1,6 +1,7 @@
 package com.ooteedemo.contactmanager.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ooteedemo.contactmanager.DetailsActivity;
 import com.ooteedemo.contactmanager.R;
 import com.ooteedemo.contactmanager.model.Contact;
 
@@ -57,7 +59,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             super(itemView);
 
-//            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
 
             contactName = itemView.findViewById(R.id.name);
             phoneNumber = itemView.findViewById(R.id.phone_number);
@@ -70,6 +72,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             int position = getAdapterPosition();
             Contact contact = contactList.get(position);
+
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra("name",contact.getName());
+            intent.putExtra("phone",contact.getPhoneNumber());
+            context.startActivity(intent);
 
             switch (v.getId()) {
                 case R.id.icon_button:
